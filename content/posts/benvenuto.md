@@ -5,16 +5,6 @@ draft: false
 tags: ["M365", "Blog"]
 description: "Il primo articolo del blog. Gli altri arrivano presto."
 ---
-
-+++
-date = '2025-11-17T20:12:20Z'
-draft = false
-title = 'Welcome Post'
-summary = "Introduzione al blog M365 Insight"
-+++
-
-<img width="912" height="461" alt="image" src="https://github.com/user-attachments/assets/b79c77d7-a724-49c8-bc2c-fafee707f346" />
-
 Benvenuto su **M365 Insight**, il tuo punto di riferimento per esplorare risorse tecniche, best practices e soluzioni pratiche nel mondo **Microsoft 365** e **Azure**.
 
 **Cosa troverai in questo blog?**
