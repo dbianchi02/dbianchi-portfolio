@@ -1,0 +1,13 @@
+<nav>
+  <a href="{{ "/" | relURL }}" class="nav-logo">db<span>://</span>bianchi</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="{{ "/#about" | relURL }}">About</a></li>
+    <li><a href="{{ "/posts/" | relURL }}">Blog</a></li>
+    <li><a href="{{ "/#projects" | relURL }}">Progetti</a></li>
+    <li><a href="{{ "/#contact" | relURL }}">Contatti</a></li>
+  </ul>
+  <a href="mailto:{{ site.Params.email }}" class="nav-cta">{{ site.Params.email }}</a>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>

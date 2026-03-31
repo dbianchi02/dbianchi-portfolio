@@ -1,0 +1,86 @@
+{{ define "main" }}
+<section class="list-hero">
+  <div class="list-hero-bg"></div>
+  <div class="section-inner">
+    <div class="section-label">Blog</div>
+    <h1 class="section-title" style="font-size:clamp(2.5rem,6vw,4.5rem)">Tutti gli articoli</h1>
+    <p class="section-subtitle">
+      Guide pratiche, script e riflessioni su Microsoft 365.
+      {{ len .Pages }} articoli pubblicati.
+    </p>
+  </div>
+</section>
+
+<section class="list-section">
+  <div class="section-inner">
+
+    <!-- Filtro tag (JS puro, no server) -->
+    <div class="tag-filter" id="tagFilter">
+      <button class="tag-btn active" data-tag="all">Tutti</button>
+      {{ $tags := slice }}
+      {{ range .Pages }}
+        {{ range .Params.tags }}
+          {{ $tags = $tags | append . }}
+        {{ end }}
+      {{ end }}
+      {{ range ($tags | uniq) }}
+      <button class="tag-btn" data-tag="{{ . | urlize }}">{{ . }}</button>
+      {{ end }}
+    </div>
+
+    <div class="list-grid" id="postGrid">
+      {{ range .Pages }}
+      <article class="post-card reveal" data-tags="{{ range .Params.tags }}{{ . | urlize }} {{ end }}">
+        <a href="{{ .Permalink }}" class="post-card-link">
+
+          <div class="post-tags">
+            {{ range first 3 .Params.tags }}
+            <span class="post-tag pt-blue">{{ . }}</span>
+            {{ end }}
+          </div>
+
+          <h2 class="post-title">{{ .Title }}</h2>
+
+          <p class="post-excerpt">
+            {{ if .Description }}{{ .Description }}{{ else }}{{ .Summary | truncate 160 }}{{ end }}
+          </p>
+
+          <div class="post-meta">
+            <span class="post-date">{{ .Date.Format "2 Jan 2006" }}</span>
+            <span class="post-readtime">{{ .ReadingTime }} min</span>
+            <span class="post-arrow">→</span>
+          </div>
+
+        </a>
+      </article>
+      {{ end }}
+    </div>
+
+    {{ if eq (len .Pages) 0 }}
+    <div class="list-empty">
+      <span class="list-empty-icon">✦</span>
+      <p>Nessun articolo ancora. Torna presto!</p>
+    </div>
+    {{ end }}
+
+  </div>
+</section>
+
+<script>
+// Tag filter
+const btns = document.querySelectorAll('.tag-btn');
+const cards = document.querySelectorAll('.post-card');
+
+btns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    btns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const tag = btn.dataset.tag;
+    cards.forEach(card => {
+      const tags = card.dataset.tags || '';
+      card.style.display = (tag === 'all' || tags.includes(tag)) ? '' : 'none';
+    });
+  });
+});
+</script>
+{{ end }}

@@ -1,0 +1,26 @@
+baseURL = "https://dbianchi.it"
+languageCode = "it"
+title = "Davide Bianchi — M365 Engineer"
+theme = "m365insight"
+paginate = 10
+
+[params]
+  author = "Davide Bianchi"
+  description = "Microsoft 365 Engineer. PowerShell, Graph API, Azure e governance nei tenant enterprise."
+  email = "hello@dbianchi.it"
+  linkedin = "https://linkedin.com/in/davide-bianchi"
+  github = "https://github.com/dbianchi02"
+  blog_url = "https://m365insight.dbianchi.it"
+
+[markup]
+  [markup.highlight]
+    style = "dracula"
+    lineNos = false
+    noClasses = true
+  [markup.goldmark.renderer]
+    unsafe = true
+
+[outputs]
+  home = ["HTML"]
+  page = ["HTML"]
+  section = ["HTML"]

@@ -1,0 +1,8 @@
+name = "M365 Insight"
+license = "MIT"
+description = "Tema personale dark per M365 Insight"
+min_version = "0.100.0"
+
+[author]
+  name = "Davide Bianchi"
+  homepage = "https://dbianchi.it"
