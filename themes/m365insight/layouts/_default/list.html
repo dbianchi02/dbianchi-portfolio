@@ -43,7 +43,7 @@
         data-desc="{{ if .Description }}{{ .Description | lower }}{{ else }}{{ .Summary | lower }}{{ end }}">
         <a href="{{ .Permalink }}" class="post-card-link">
           <div class="post-tags">
-            {{ range first 3 .Params.tags }}
+            {{ range first 3 (default slice .Params.tags) }}
             <span class="post-tag pt-blue">{{ . }}</span>
             {{ end }}
           </div>
