@@ -277,3 +277,10 @@ nav.pager,
 article.post-single {
   padding-top: 64px;
 }
+
+.post-toc {
+  background: red !important;
+}
+.post-content {
+  background: blue !important;
+}
