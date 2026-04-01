@@ -49,13 +49,10 @@
 .post-layout {
   max-width: 1100px; margin: 0 auto;
   padding: clamp(2rem,5vw,4rem) clamp(1.5rem,5vw,4rem);
-  display: grid; grid-template-columns: 240px 1fr; gap: 4rem; align-items: start;
+  display: grid; grid-template-columns: 1fr 240px; gap: 4rem; align-items: start;
 }
 
-.post-toc { order: 1; }
-
 /* ─── TABLE OF CONTENTS ─── */
-.post-toc { order: 2; }
 .toc-sticky {
   position: sticky; top: 84px;
   background: var(--surface); border: 1px solid var(--border);
@@ -88,7 +85,6 @@
 .toc-back:hover { color: var(--accent); }
 
 /* ─── POST CONTENT (markdown rendered) ─── */
-.post-content { order: 1; min-width: 0; }
 
 .post-content h1,
 .post-content h2,
