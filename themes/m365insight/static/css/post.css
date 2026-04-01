@@ -49,8 +49,14 @@
 .post-layout {
   max-width: 1100px; margin: 0 auto;
   padding: clamp(2rem,5vw,4rem) clamp(1.5rem,5vw,4rem);
-  display: grid; grid-template-columns: 1fr 240px; gap: 4rem; align-items: start;
+  display: grid;
+  grid-template-columns: 1fr 260px;  /* content prima, TOC dopo */
+  gap: 4rem;
+  align-items: start;
 }
+
+.post-toc    { grid-column: 2; }
+.post-content { grid-column: 1; grid-row: 1; }
 
 /* ─── TABLE OF CONTENTS ─── */
 .toc-sticky {
@@ -226,6 +232,32 @@
 .list-empty-icon { font-size: 2rem; color: var(--text3); display: block; margin-bottom: 1rem; }
 .list-empty p { font-family: var(--font-mono); font-size: 0.85rem; color: var(--text3); }
 
+/* ─── POST NAV WRAPPER (fondo pagina) ─── */
+.post-nav-wrapper {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 5vw, 4rem);
+}
+.post-nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.post-nav-label {
+  display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 2rem;
+}
+.post-nav-label-line {
+  flex: 1; height: 1px; background: var(--border);
+}
+.post-nav-label-text {
+  font-family: var(--font-mono); font-size: 0.72rem;
+  color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* assicura che il TOC generato da Hugo sia visibile */
+#TableOfContents { display: block; }
+
 /* ─── MOBILE POST ─── */
 @media (max-width: 900px) {
   .post-layout { grid-template-columns: 1fr; gap: 2rem; }
@@ -233,3 +265,4 @@
   .post-nav { grid-template-columns: 1fr; }
   .list-grid { grid-template-columns: 1fr; }
 }
+
