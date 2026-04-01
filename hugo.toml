@@ -13,18 +13,16 @@ paginate = 10
   blog_url = "https://m365insight.dbianchi.it"
 
 [markup]
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+    ordered = false
   [markup.highlight]
     style = "dracula"
     lineNos = false
     noClasses = true
   [markup.goldmark.renderer]
     unsafe = true
-
-[markup]
-  [markup.tableOfContents]
-    startLevel = 2
-    endLevel = 3
-    ordered = false
 
 [outputs]
   home = ["HTML"]
