@@ -273,3 +273,7 @@ nav.pager,
 .pager {
   display: none !important;
 }
+
+article.post-single {
+  padding-top: 64px;
+}
