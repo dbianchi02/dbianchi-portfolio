@@ -55,8 +55,8 @@
   align-items: start;
 }
 
-.post-toc    { grid-column: 2; }
 .post-content { grid-column: 1; grid-row: 1; }
+.post-toc     { grid-column: 2; grid-row: 1; }
 
 /* ─── TABLE OF CONTENTS ─── */
 .toc-sticky {
@@ -266,3 +266,10 @@
   .list-grid { grid-template-columns: 1fr; }
 }
 
+/* Nasconde la nav prev/next automatica di Hugo */
+.post-single > nav,
+.post-single > .prev-next,
+nav.pager,
+.pager {
+  display: none !important;
+}
