@@ -14,52 +14,62 @@
 <section class="list-section">
   <div class="section-inner">
 
-    <!-- Filtro tag (JS puro, no server) -->
-    <div class="tag-filter" id="tagFilter">
-      <button class="tag-btn active" data-tag="all">Tutti</button>
-      {{ $tags := slice }}
-      {{ range .Pages }}
-        {{ range .Params.tags }}
-          {{ $tags = $tags | append . }}
-        {{ end }}
-      {{ end }}
-      {{ range ($tags | uniq) }}
-      <button class="tag-btn" data-tag="{{ . | urlize }}">{{ . }}</button>
-      {{ end }}
+    <!-- Search bar -->
+    <div class="search-wrapper">
+      <div class="search-bar">
+        <span class="search-prompt">PS&gt;</span>
+        <span class="search-cmd">Search-Article</span>
+        <span class="search-param">-Query</span>
+        <input
+          type="text"
+          id="searchInput"
+          class="search-input"
+          placeholder="powershell, governance, copilot..."
+          autocomplete="off"
+          spellcheck="false"
+        >
+        <span class="search-cursor" id="searchCursor"></span>
+      </div>
+      <div class="search-hint" id="searchHint">
+        <span id="searchCount">{{ len .Pages }} risultati</span>
+      </div>
     </div>
 
     <div class="list-grid" id="postGrid">
       {{ range .Pages }}
-      <article class="post-card reveal" data-tags="{{ range .Params.tags }}{{ . | urlize }} {{ end }}">
+      <article class="post-card reveal"
+        data-title="{{ .Title | lower }}"
+        data-tags="{{ range .Params.tags }}{{ . | lower }} {{ end }}"
+        data-desc="{{ if .Description }}{{ .Description | lower }}{{ else }}{{ .Summary | lower }}{{ end }}">
         <a href="{{ .Permalink }}" class="post-card-link">
-
           <div class="post-tags">
-            {{ range first 3 (default slice .Params.tags) }}
+            {{ range first 3 .Params.tags }}
             <span class="post-tag pt-blue">{{ . }}</span>
             {{ end }}
           </div>
-
           <h2 class="post-title">{{ .Title }}</h2>
-
           <p class="post-excerpt">
             {{ if .Description }}{{ .Description }}{{ else }}{{ .Summary | truncate 160 }}{{ end }}
           </p>
-
           <div class="post-meta">
             <span class="post-date">{{ .Date.Format "2 Jan 2006" }}</span>
             <span class="post-readtime">{{ .ReadingTime }} min</span>
             <span class="post-arrow">→</span>
           </div>
-
         </a>
       </article>
       {{ end }}
     </div>
 
+    <div class="list-empty" id="noResults" style="display:none">
+      <span class="list-empty-icon">⌀</span>
+      <p>// Nessun articolo trovato per questa query</p>
+    </div>
+
     {{ if eq (len .Pages) 0 }}
     <div class="list-empty">
       <span class="list-empty-icon">✦</span>
-      <p>Nessun articolo ancora. Torna presto!</p>
+      <p>// Articoli in arrivo...</p>
     </div>
     {{ end }}
 
@@ -67,20 +77,34 @@
 </section>
 
 <script>
-// Tag filter
-const btns = document.querySelectorAll('.tag-btn');
+const input = document.getElementById('searchInput');
 const cards = document.querySelectorAll('.post-card');
+const hint  = document.getElementById('searchCount');
+const noRes = document.getElementById('noResults');
+const cursor = document.getElementById('searchCursor');
 
-btns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    btns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const tag = btn.dataset.tag;
-    cards.forEach(card => {
-      const tags = card.dataset.tags || '';
-      card.style.display = (tag === 'all' || tags.includes(tag)) ? '' : 'none';
-    });
+// Hide blinking cursor when typing starts
+input.addEventListener('focus', () => cursor.style.display = 'none');
+input.addEventListener('blur',  () => { if (!input.value) cursor.style.display = ''; });
+
+input.addEventListener('input', () => {
+  const q = input.value.toLowerCase().trim();
+  let visible = 0;
+
+  cards.forEach(card => {
+    const title = card.dataset.title || '';
+    const tags  = card.dataset.tags  || '';
+    const desc  = card.dataset.desc  || '';
+    const match = !q || title.includes(q) || tags.includes(q) || desc.includes(q);
+    card.style.display = match ? '' : 'none';
+    if (match) visible++;
   });
+
+  hint.textContent = q
+    ? `${visible} risultat${visible === 1 ? 'o' : 'i'} per "${q}"`
+    : `${cards.length} risultati`;
+
+  noRes.style.display = visible === 0 ? '' : 'none';
 });
 </script>
 {{ end }}

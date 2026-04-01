@@ -49,6 +49,7 @@
 
   <!-- CORPO ARTICOLO -->
   <div class="post-layout">
+
     <!-- Sidebar TOC (solo desktop) -->
     <aside class="post-toc">
       <div class="toc-sticky">
@@ -72,14 +73,26 @@
         {{ end }}
       </div>
       {{ end }}
+    </div>
+  </div>
 
-      <!-- Navigazione prev/next -->
+  <!-- PREV/NEXT — fuori dal layout, in fondo alla pagina -->
+  {{ if or .PrevInSection .NextInSection }}
+  <div class="post-nav-wrapper">
+    <div class="post-nav-inner">
+      <div class="post-nav-label">
+        <span class="post-nav-label-line"></span>
+        <span class="post-nav-label-text">Continua a leggere</span>
+        <span class="post-nav-label-line"></span>
+      </div>
       <nav class="post-nav">
         {{ with .PrevInSection }}
         <a href="{{ .Permalink }}" class="post-nav-item post-nav-prev">
           <span class="post-nav-dir">← Articolo precedente</span>
           <span class="post-nav-title">{{ .Title }}</span>
         </a>
+        {{ else }}
+        <div class="post-nav-empty"></div>
         {{ end }}
         {{ with .NextInSection }}
         <a href="{{ .Permalink }}" class="post-nav-item post-nav-next">
@@ -90,6 +103,7 @@
       </nav>
     </div>
   </div>
+  {{ end }}
 
 </article>
 {{ end }}
